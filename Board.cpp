@@ -57,7 +57,7 @@ ChessBoard::ChessBoard(bool start){
 		pBoard[8][5] = B_Queen;
 	}
 }
-void ChessBoard::ChessDisplay() {
+Piece* ChessBoard::ChessDisplay() {
 	//	printf("41\n");
 	
 	for (int y = 0; y <= 9; y++) {
@@ -104,4 +104,5 @@ void ChessBoard::ChessDisplay() {
 
 		printf("\n");
 	}
+	return *pBoard;
 }

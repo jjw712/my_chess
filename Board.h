@@ -5,7 +5,8 @@ typedef struct Piece {
 //	int x, y;
 	int team;	// 0 black 1 white
 }Piece;
-static Piece pBoard[10][10];
+
+extern Piece pBoard[10][10] = { 0, };
 /* 0 1 2 3 4 5 6 7 8 9
 0 -1-1-1-1-1-1-1-1-1-1
 1 -1	            -1
@@ -20,10 +21,11 @@ static Piece pBoard[10][10];
 */
 class ChessBoard {
 private:
+//	static Piece pBoard[10][10];
 	
 public:
 	ChessBoard(bool start = true);
-	void ChessDisplay();
+	Piece* ChessDisplay();
 	void MoveTo(int ax, int ay, int bx, int by);
 	int GetCommand();
 	~ChessBoard() {
