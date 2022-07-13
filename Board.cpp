@@ -13,7 +13,7 @@
 8 -1                -1
 9 -1-1-1-1-1-1-1-1-1-1
 */
-ChessBoard::ChessBoard(bool start){
+ChessBoard::ChessBoard(Piece _pBoard[][10]){
 	Piece out = { -1,-1 };
 	Piece empty = { 0,-1 };
 	Piece B_Pawn = { 1,0 };
@@ -28,36 +28,36 @@ ChessBoard::ChessBoard(bool start){
 	Piece W_Queen = { 5,1 };
 	Piece B_King = { 6,0 };
 	Piece W_King = { 6,1 };
-	if (start == true) {	// 처음
+//	if (start == true) {	// 처음
 		for (int i = 0; i <= 9; i++) {
-			pBoard[i][0] = out;
-			pBoard[i][9] = out;
-			pBoard[0][i] = out;
-			pBoard[9][i] = out;
+			_pBoard[i][0] = out;
+			_pBoard[i][9] = out;
+			_pBoard[0][i] = out;
+			_pBoard[9][i] = out;
 		}
 		for (int x = 1; x <= 8;x++) {
-			pBoard[2][x] = W_Pawn;
-			pBoard[7][x] = B_Pawn;
+			_pBoard[2][x] = W_Pawn;
+			_pBoard[7][x] = B_Pawn;
 		}
-		pBoard[1][1] = W_Rock;
-		pBoard[1][8] = W_Rock;
-		pBoard[8][1] = B_Rock;
-		pBoard[8][8] = B_Rock;
-		pBoard[1][2] = W_Knight;
-		pBoard[1][7] = W_Knight;
-		pBoard[8][2] = B_Knight;
-		pBoard[8][7] = B_Knight;
-		pBoard[1][3] = W_Bishop;
-		pBoard[1][6] = W_Bishop;
-		pBoard[8][3] = B_Bishop;
-		pBoard[8][6] = B_Bishop;
-		pBoard[1][4] = W_King;
-		pBoard[1][5] = W_Queen;
-		pBoard[8][4] = B_King;
-		pBoard[8][5] = B_Queen;
-	}
+		_pBoard[1][1] = W_Rock;
+		_pBoard[1][8] = W_Rock;
+		_pBoard[8][1] = B_Rock;
+		_pBoard[8][8] = B_Rock;
+		_pBoard[1][2] = W_Knight;
+		_pBoard[1][7] = W_Knight;
+		_pBoard[8][2] = B_Knight;
+		_pBoard[8][7] = B_Knight;
+		_pBoard[1][3] = W_Bishop;
+		_pBoard[1][6] = W_Bishop;
+		_pBoard[8][3] = B_Bishop;
+		_pBoard[8][6] = B_Bishop;
+		_pBoard[1][4] = W_King;
+		_pBoard[1][5] = W_Queen;
+		_pBoard[8][4] = B_King;
+		_pBoard[8][5] = B_Queen;
+//	}
 }
-Piece* ChessBoard::ChessDisplay() {
+Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
 	//	printf("41\n");
 	
 	for (int y = 0; y <= 9; y++) {
@@ -65,7 +65,7 @@ Piece* ChessBoard::ChessDisplay() {
 		for (int x = 0; x <= 9; x++) {
 			//			printf("43\n");
 			int team, type;
-			type = pBoard[y][x].type;
+			type = _pBoard[y][x].type;
 //			printf("%d", type);
 			if (y == 0 || x == 0) {
 				printf("%d  ", _MAX(y,x));
@@ -104,5 +104,5 @@ Piece* ChessBoard::ChessDisplay() {
 
 		printf("\n");
 	}
-	return *pBoard;
+	return *_pBoard;
 }

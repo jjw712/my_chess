@@ -1,16 +1,19 @@
 #include"Board.h"
 #include<algorithm>
-int Pa(int team, int ax, int ay, int bx, int by);
-int Ro(int team, int ax, int ay, int bx, int by);
-int Kn(int team, int ax, int ay, int bx, int by);
-int Bi(int team, int ax, int ay, int bx, int by);
-int Qu(int team, int ax, int ay, int bx, int by);
-int Ki(int team, int ax, int ay, int bx, int by);
-//extern Piece pBoard[10][10];
-void ChessBoard::MoveTo(int ax, int ay, int bx, int by) {
-//	Piece pBoard[10][10] = ChessBoard::pBoard;
-	int team = pBoard[ay][ax].team;
-	int type =pBoard[ay][ax].type;
+#include<math.h>
+using namespace std;
+
+int Pa(int team, int ax, int ay, int bx, int by,Piece _pBoard[][10]);
+int Ro(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+int Kn(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+int Bi(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+//extern Piece _pBoard[10][10];
+void ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+//	Piece _pBoard[10][10] = ChessBoard::_pBoard;
+	int team = _pBoard[ay][ax].team;
+	int type =_pBoard[ay][ax].type;
 	int tmp_B[10][10] = { 0, };	//0 불가능 1 가능 2 어택
 	if (ax < 1 || ax>8 || bx < 1 || bx>8 || ay < 1 || ay>8 || by < 1 || by>8) {
 		printf("input error\n");
@@ -24,22 +27,22 @@ void ChessBoard::MoveTo(int ax, int ay, int bx, int by) {
 		printf("empty");
 		break;
 	case 1:
-		Pa(team, ax, ay, bx, by);
+		Pa(team, ax, ay, bx, by,_pBoard);
 		break;
 	case 2:
-		Ro(team, ax, ay, bx, by);
+		Ro(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 3:
-		Kn(team, ax, ay, bx, by);
+		Kn(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 4:
-		Bi(team, ax, ay, bx, by);
+		Bi(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 5:
-		Qu(team, ax, ay, bx, by);
+		Qu(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 6:
-		Ki(team, ax, ay, bx, by);
+		Ki(team, ax, ay, bx, by, _pBoard);
 		break;
 	default:
 		printf("   ");
@@ -58,24 +61,24 @@ void ChessBoard::MoveTo(int ax, int ay, int bx, int by) {
 8  Ro Kn Bi Ki Qu Bi Kn Ro ㅣ
 9  ㅣ ㅣ ㅣ ㅣ ㅣ ㅣ ㅣ ㅣ ㅣ
 */
-void _move(int ax, int ay, int bx, int by) {
-	pBoard[by][bx].type = pBoard[ay][ax].type;
-	pBoard[by][bx].team = pBoard[ay][ax].team;
-	pBoard[ay][ax].type = 0;
-	pBoard[ay][ax].team = -1;
+void _move(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	_pBoard[by][bx].type = _pBoard[ay][ax].type;
+	_pBoard[by][bx].team = _pBoard[ay][ax].team;
+	_pBoard[ay][ax].type = 0;
+	_pBoard[ay][ax].team = -1;
 }
-int Pa(int team, int ax, int ay, int bx, int by) {
+int Pa(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 	if (team == 1) {	// White
-		if (pBoard[by][bx].type >= 0) {
+		if (_pBoard[by][bx].type > 0) {
 			if (ay + 1 == by && abs(ax - bx) == 1) {
-				_move(ax, ay, bx, by);
+				_move(ax, ay, bx, by, _pBoard);
 				printf("attack\n");
 				return 2;
 			}
 		}
 		else if(ay == 2){
-			if (ax == bx && (by - ay == 1 || (by - ay == 2 && pBoard[ay + 1][by].type < 1))) {
-				_move(ax, ay, bx, by);
+			if (ax == bx && (by - ay == 1 || (by - ay == 2 && _pBoard[ay + 1][by].type < 1))) {
+				_move(ax, ay, bx, by, _pBoard);
 				printf("move\n");
 				return 1;
 			}
@@ -83,7 +86,7 @@ int Pa(int team, int ax, int ay, int bx, int by) {
 		}
 		else {
 			if ((ax == bx && by - ay == 1)) {
-				_move(ax, ay, bx, by);
+				_move(ax, ay, bx, by, _pBoard);
 				printf("move\n");
 				return 1;
 			}
@@ -92,17 +95,17 @@ int Pa(int team, int ax, int ay, int bx, int by) {
 		return 0;
 	}
 	else if(team == 0){		// Black
-		if (pBoard[by][bx].type >= 0) {
+		if (_pBoard[by][bx].type > 0) {
 			if (ay - 1 == by && abs(ax - bx) == 1) {
-				pBoard[by][bx].type = pBoard[ay][ax].type;
-				pBoard[by][bx].team = pBoard[ay][ax].team;
+				_pBoard[by][bx].type = _pBoard[ay][ax].type;
+				_pBoard[by][bx].team = _pBoard[ay][ax].team;
 				printf("attack\n");
 				return 2;
 			}
 		}
 		else if (ay == 7) {
-			if (ax == bx && (by - ay == -1 || (by - ay == -2 && pBoard[ay + 1][by].type < 1))) {
-				_move(ax, ay, bx, by);
+			if (ax == bx && (by - ay == -1 || (by - ay == -2 && _pBoard[ay - 1][by].type < 1))) {
+				_move(ax, ay, bx, by,_pBoard);
 				printf("move\n");
 				return 1;
 			}
@@ -110,7 +113,7 @@ int Pa(int team, int ax, int ay, int bx, int by) {
 		}
 		else {
 			if ((ax == bx && by - ay == -1)) {
-				_move(ax, ay, bx, by);
+				_move(ax, ay, bx, by, _pBoard);
 				printf("move\n");
 				return 1;
 			}
@@ -119,19 +122,146 @@ int Pa(int team, int ax, int ay, int bx, int by) {
 		return 0;
 	}
 	return 0;
-}
-int Ro(int team, int ax, int ay, int bx, int by) {
+}	 //complete
+int Ro(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	if (ax != bx && ay != by) {
+		printf("impossible\n");
+		return 0;
+	}
+	
+	if (ax == bx) {	//y축 이동
+		for (int y = min(ay, by) + 1; y < max(ay, by); y++) {
+			if (_pBoard[y][ax].type > 0) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+		if (_pBoard[by][bx].team != team) {
+			_move(ax, ay, bx, by, _pBoard);
+			printf("attack\n");
+			return 2;
+		}
+		else if (_pBoard[by][bx].team == team) {
+			printf("same team impossible\n");
+			return 0;
+		}
+		else if (_pBoard[by][bx].team == -1) {
+			printf("move\n");
+			return 1;
+		}
+	}
+	if (ay == by) {	//x축 이동
+		for (int x = min(ax, bx) + 1; x < max(ax, bx); x++) {
+			if (_pBoard[ay][x].type > 0) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+		if (_pBoard[by][bx].team != -1 && _pBoard[by][bx].team != team) {
+			_move(ax, ay, bx, by, _pBoard);
+			printf("attack\n");
+			return 2;
+		}
+		else if (_pBoard[by][bx].team == team) {
+			printf("same team impossible\n");
+			return 0;
+		}
+		else if (_pBoard[by][bx].team == -1) {
+			printf("move\n");
+			return 1;
+		}
+	}
+	return 0;
+}	 //complete
+int Kn(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	int tmp_Kn[9][2] = { 
+		{ax - 2,ay + 1},{ax - 2,ay - 1},{ax + 2,ay + 1},{ax + 2,ay - 1}, {ax + 1,ay + 2},{ax - 1,ay + 2 },{ax + 1,ay - 2},{ax - 1,ay - 2} 
+	};
+	for (int i = 0; i < 9; i++) {
+		if (bx == tmp_Kn[i][0] && by == tmp_Kn[i][1]) {
+			
+			
+			
+			if (_pBoard[by][bx].type <= 0) {
+				_move(ax, ay, bx, by, _pBoard);
+				printf("move\n");
+				return 0;
+			}
+			else if (_pBoard[by][bx].type >= 1 && _pBoard[by][bx].team != team) {
+				_move(ax, ay, bx, by, _pBoard);
+				printf("attack\n");
+				return 2;
+			}
+			else if (_pBoard[by][bx].type >= 1 && _pBoard[by][bx].team != team) {
+				printf("same team impossible\n");
+				return 0;
+			}
+		}
+	}
+	return 0;
+}	 //complete
+int Bi(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	if (abs(ax - bx) != abs(ay - by)) {
+		printf("impossible\n");
+		return 0;
+	}
+	int N = abs(ax - bx);
+	if (ax > bx && ay > by) {	//7
+		for (int i = 1; i < N - 1; i++) {
+			if (_pBoard[ay - i][ax - i].type >= 1) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+	}
+	if (ax > bx && ay < by) {	//1
+		for (int i = 1; i < N - 1; i++) {
+			if (_pBoard[ay + i][ax - i].type >= 1) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+	}
+	if (ax < bx && ay > by) {	//9
+		for (int i = 1; i < N - 1; i++) {
+			if (_pBoard[ay - i][ax + i].type >= 1) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+	}
+	if (ax < bx && ay < by) {	//3
+		for (int i = 1; i <= N - 1; i++) {
+			if (_pBoard[ay + i][ax + i].type >= 1) {
+				printf("impossible\n");
+				return 0;
+			}
+		}
+	}
+	if (_pBoard[by][bx].type <= 0) {
+		printf("move\n");
+		_move(ax, ay, bx, by, _pBoard);
+		return 1;
+	}
+	else if (_pBoard[by][bx].team == team) {
+		printf("same team impossible\n");
+		return 0;
+	}
+	else if (_pBoard[by][bx].team != team && _pBoard[by][bx].team != -1) {
+		printf("attack\n");
+		_move(ax, ay, bx, by, _pBoard);
+		return 2;
+	}
+	
 	return 0;
 }
-int Kn(int team, int ax, int ay, int bx, int by) {
+int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	int Rtmp = Ro(team,ax, ay, bx, by, _pBoard);
+	int Btmp = Bi(team, ax, ay, bx, by, _pBoard);
+
+
 	return 0;
 }
-int Bi(int team, int ax, int ay, int bx, int by) {
-	return 0;
-}
-int Qu(int team, int ax, int ay, int bx, int by) {
-	return 0;
-}
-int Ki(int team, int ax, int ay, int bx, int by) {
+int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 	return 0;
 }

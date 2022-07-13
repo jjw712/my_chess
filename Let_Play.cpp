@@ -2,11 +2,13 @@
 #include<iostream>
 ChessPlay::ChessPlay() {
 //	printf("1\n");
-	ChessBoard Board = ChessBoard();
+	ChessBoard Board = ChessBoard(pBoard);
 //	printf("2\n");
-	Board.ChessDisplay();
-	printf("\n%d\n", pBoard[2][2].type);
-	Board.GetCommand();
+	while (1) {
+		Board.ChessDisplay(pBoard);
+		printf("\n%d\n", pBoard[2][2].type);
+		Board.GetCommand(pBoard);
+	}
 //	printf("3\n");
 }
 void ChessPlay::_Command() {
