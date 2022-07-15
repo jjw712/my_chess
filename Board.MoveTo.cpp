@@ -10,43 +10,47 @@ int Bi(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 //extern Piece _pBoard[10][10];
-void ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+int ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 //	Piece _pBoard[10][10] = ChessBoard::_pBoard;
 	int team = _pBoard[ay][ax].team;
 	int type =_pBoard[ay][ax].type;
 	int tmp_B[10][10] = { 0, };	//0 불가능 1 가능 2 어택
 	if (ax < 1 || ax>8 || bx < 1 || bx>8 || ay < 1 || ay>8 || by < 1 || by>8) {
 		printf("input error\n");
-		return;
+		return 0;
 	}
 	switch (type) {
 	case -1:
 		printf("empty");
+		return 0;
 		break;
 	case 0:
 		printf("empty");
+		return 0;
 		break;
 	case 1:
-		Pa(team, ax, ay, bx, by,_pBoard);
+		return Pa(team, ax, ay, bx, by,_pBoard);
 		break;
 	case 2:
-		Ro(team, ax, ay, bx, by, _pBoard);
+		return Ro(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 3:
-		Kn(team, ax, ay, bx, by, _pBoard);
+		return Kn(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 4:
-		Bi(team, ax, ay, bx, by, _pBoard);
+		return Bi(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 5:
-		Qu(team, ax, ay, bx, by, _pBoard);
+		return Qu(team, ax, ay, bx, by, _pBoard);
 		break;
 	case 6:
-		Ki(team, ax, ay, bx, by, _pBoard);
+		return Ki(team, ax, ay, bx, by, _pBoard);
 		break;
 	default:
+		return 0;
 		printf("   ");
 	}
+	return 0;
 }
 /// <summary>
 /*
@@ -263,5 +267,25 @@ int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 	return 0;
 }
 int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	if (abs(ay - by) > 1 || abs(ax - bx) > 1) {
+		printf("impossible\n");
+		return 0;
+	}
+	if (_pBoard[by][bx].team == team) {
+		printf("same team impossible\n");
+		return 0;
+	}
+	else if (_pBoard[by][bx].type < 1) {
+		printf("move\n");
+		_move(ax, ay, bx, by, _pBoard);
+		return 1;
+	}
+	else if (_pBoard[by][bx].team != team) {
+		printf("attack\n");
+		_move(ax, ay, bx, by, _pBoard);
+		return 2;
+	}
+	else
+		printf("error\n");
 	return 0;
 }

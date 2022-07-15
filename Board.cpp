@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include "Board.h"
 
 #define		_MAX(a, b) (((a) > (b)) ? (a) : (b))
@@ -59,14 +60,25 @@ ChessBoard::ChessBoard(Piece _pBoard[][10]){
 }
 Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
 	//	printf("41\n");
-	
+	system("cls");
+	int King[2] = { 0, };
 	for (int y = 0; y <= 9; y++) {
 		//		printf("42\n");
 		for (int x = 0; x <= 9; x++) {
 			//			printf("43\n");
 			int team, type;
 			type = _pBoard[y][x].type;
+			team = _pBoard[y][x].team;
 //			printf("%d", type);
+			if (type >= 1) {
+				if (team == 0)
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+				else if (team == 1)
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+			}
+			else {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
 			if (y == 0 || x == 0) {
 				printf("%d  ", _MAX(y,x));
 				continue;
@@ -95,6 +107,7 @@ Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
 					break;
 				case 6:
 					printf("Ki ");
+					King[team]=1;
 					break;
 				default:
 					printf("   ");
@@ -103,6 +116,15 @@ Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
 		}
 
 		printf("\n");
+	}
+	printf("Quit: -1\n");
+	if (King[0] == 0) {
+		printf("White Win!!\n");
+		exit(0);
+	}
+	if (King[1] == 0) {
+		printf("Black Win!!\n");
+		exit(0);
 	}
 	return *_pBoard;
 }

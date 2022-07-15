@@ -26,8 +26,9 @@ private:
 public:
 	ChessBoard(Piece _pBoard[][10]);
 	Piece* ChessDisplay(Piece _pBoard[][10]);
-	void MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]);
-	int GetCommand(Piece _pBoard[][10]);
+	int MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]);
+	int GetCommand(Piece _pBoard[][10], int turn);
+	int GetCommand2(Piece _pBoard[][10], int turn);
 	~ChessBoard() {
 
 	}

@@ -4,10 +4,18 @@ ChessPlay::ChessPlay() {
 //	printf("1\n");
 	ChessBoard Board = ChessBoard(pBoard);
 //	printf("2\n");
+	int turn = 1;
 	while (1) {
 		Board.ChessDisplay(pBoard);
-		printf("\n%d\n", pBoard[2][2].type);
-		Board.GetCommand(pBoard);
+		printf("\nturn: %d", turn);
+		if (turn % 2 == 1)
+			printf(" White\n");
+		else
+			printf(" Black\n");
+
+		int tmp = Board.GetCommand2(pBoard, turn);
+		if (tmp >= 1)
+			turn++;
 	}
 //	printf("3\n");
 }
