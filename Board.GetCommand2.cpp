@@ -18,13 +18,14 @@ void gotoXY(int x, int y) {
 }
 
 int ChessBoard::GetCommand2(Piece _pBoard[][10], int turn) {
-	int ax, ay, bx, by;
-	int input;
-	int x = 1;
+	int ax=0, ay=0, bx=0, by=0;
+	int input = 0;
+	int x = 0;
 	int y = 1;
 //	if (input == 224)
 //		input = _getch();
-	while (1) {
+
+	while (input != ENTER) {
 		gotoXY(x, y);
 		input = _getch();
 		if (input == 224)
@@ -39,17 +40,48 @@ int ChessBoard::GetCommand2(Piece _pBoard[][10], int turn) {
 				y++;
 			break;
 		case RIGHT:
-			if (x < 10)
-				x++;
+			if (x < 10*3)
+				x+=3;
 			break;
 		case LEFT:
 			if (x > 0)
-				x--;
+				x-=3;
 			break;
 		case ENTER:
-			ax = x;
+			ax = x/3;
 			ay = y;
-			printf("%d %d\n", y, x);
+			
 		}
 	}
+	input = 0;
+	while (input != ENTER) {
+		gotoXY(x, y);
+		input = _getch();
+		if (input == 224)
+			input = _getch();
+		switch (input) {
+		case UP:
+			if (y > 0)
+				y--;
+			break;
+		case DOWN:
+			if (y < 10)
+				y++;
+			break;
+		case RIGHT:
+			if (x < 10 * 3)
+				x += 3;
+			break;
+		case LEFT:
+			if (x > 0)
+				x -= 3;
+			break;
+		case ENTER:
+			bx = x / 3;
+			by = y;
+
+		}
+	}
+
+	return MoveTo(ax,ay,bx,by,_pBoard);
 }

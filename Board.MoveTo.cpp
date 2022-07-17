@@ -11,6 +11,7 @@ int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 //extern Piece _pBoard[10][10];
 int ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
+	printf("%d %d %d %d\n", ax, ay, bx, by);
 //	Piece _pBoard[10][10] = ChessBoard::_pBoard;
 	int team = _pBoard[ay][ax].team;
 	int type =_pBoard[ay][ax].type;

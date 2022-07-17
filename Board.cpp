@@ -56,6 +56,13 @@ ChessBoard::ChessBoard(Piece _pBoard[][10]){
 		_pBoard[1][5] = W_Queen;
 		_pBoard[8][4] = B_King;
 		_pBoard[8][5] = B_Queen;
+		for (int i = 0; i <= 9; i++) {
+			for (int j = 0; j <= 9; j++) {
+				if (_pBoard[j][i].team == 0 && _pBoard[j][i].type == 0) {
+					_pBoard[j][i] = empty;
+				}
+			}
+		}
 //	}
 }
 Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
