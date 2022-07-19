@@ -15,6 +15,7 @@
 9 -1-1-1-1-1-1-1-1-1-1
 */
 ChessBoard::ChessBoard(Piece _pBoard[][10]){
+	
 	Piece out = { -1,-1 };
 	Piece empty = { 0,-1 };
 	Piece B_Pawn = { 1,0 };
@@ -29,6 +30,11 @@ ChessBoard::ChessBoard(Piece _pBoard[][10]){
 	Piece W_Queen = { 5,1 };
 	Piece B_King = { 6,0 };
 	Piece W_King = { 6,1 };
+	for (int y = 0; y <= 9; y++) {
+		for (int x = 0; x <= 9; x++) {
+			_pBoard[y][x] =empty;
+		}
+	}
 //	if (start == true) {	// Ã³À½
 		for (int i = 0; i <= 9; i++) {
 			_pBoard[i][0] = out;
@@ -63,10 +69,12 @@ ChessBoard::ChessBoard(Piece _pBoard[][10]){
 				}
 			}
 		}
+		
 //	}
 }
-Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
+Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10], int _turn) {
 	//	printf("41\n");
+//	Sleep(100);
 	system("cls");
 	int King[2] = { 0, };
 	for (int y = 0; y <= 9; y++) {
@@ -124,13 +132,23 @@ Piece* ChessBoard::ChessDisplay(Piece _pBoard[][10]) {
 
 		printf("\n");
 	}
-	printf("Quit: -1\n");
+	printf("Press Q to Exit\n");
+	printf("Press R to Restart\n");
+	printf("\nturn: %d", _turn);
+	if (_turn % 2 == 1)
+		printf(" White\n");
+	else
+		printf(" Black\n");
 	if (King[0] == 0) {
+		system("cls");
 		printf("White Win!!\n");
+		Sleep(1000);
 		exit(0);
 	}
 	if (King[1] == 0) {
+		system("cls");
 		printf("Black Win!!\n");
+		Sleep(1000);
 		exit(0);
 	}
 	return *_pBoard;

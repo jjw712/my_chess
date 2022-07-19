@@ -9,6 +9,10 @@ using namespace std;
 #define	LEFT	75
 #define RIGHT	77
 #define ENTER	13
+#define QUIT	81
+#define quit	113
+#define RESTART	82
+#define restart	114
 void gotoXY(int x, int y) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD pos;
@@ -17,14 +21,17 @@ void gotoXY(int x, int y) {
 	SetConsoleCursorPosition(handle, pos);
 }
 
-int ChessBoard::GetCommand2(Piece _pBoard[][10], int turn) {
+int ChessBoard::GetCommand2(Piece _pBoard[][10], int* _turn) {
 	int ax=0, ay=0, bx=0, by=0;
 	int input = 0;
-	int x = 0;
+	int x = 3;
 	int y = 1;
 //	if (input == 224)
 //		input = _getch();
-
+	if (*_turn % 2 == 0) {
+		x = 3;
+		y = 8;
+	}
 	while (input != ENTER) {
 		gotoXY(x, y);
 		input = _getch();
@@ -48,9 +55,25 @@ int ChessBoard::GetCommand2(Piece _pBoard[][10], int turn) {
 				x-=3;
 			break;
 		case ENTER:
-			ax = x/3;
+			ax = x / 3;
 			ay = y;
-			
+			break;
+		case RESTART: {
+			system("cls");
+			printf("RESTART\n");
+			*_turn = 1;
+			Sleep(1000);
+			system("cls");
+			ChessBoard RePlay = ChessBoard(_pBoard);
+			RePlay.ChessDisplay(_pBoard,1);
+
+			break;
+		}
+		case QUIT:
+			system("cls");
+			printf("...Quit The Game...\n");
+			Sleep(1000);
+			exit(0);
 		}
 	}
 	input = 0;
@@ -79,7 +102,20 @@ int ChessBoard::GetCommand2(Piece _pBoard[][10], int turn) {
 		case ENTER:
 			bx = x / 3;
 			by = y;
+			break;
+		case RESTART: {
+			printf("RESTART\n");
+			ChessBoard RePlay = ChessBoard(_pBoard);
 
+			
+			break;
+		}
+
+		case QUIT:
+			system("cls");
+			printf("...Quit The Game...\n");
+			Sleep(1000);
+			exit(0);
 		}
 	}
 

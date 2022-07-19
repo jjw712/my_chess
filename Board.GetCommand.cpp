@@ -2,7 +2,7 @@
 #include"Board.h"
 #include<algorithm>
 
-int ChessBoard::GetCommand(Piece _pBoard[][10], int turn) {
+int ChessBoard::GetCommand(Piece _pBoard[][10]) {
 	int ax, ay, bx, by;
 	scanf("%d", &ax);
 	if (ax == -1) {
@@ -10,10 +10,10 @@ int ChessBoard::GetCommand(Piece _pBoard[][10], int turn) {
 		exit(0);
 	}
 	scanf("%d", &ay);
-	if (_pBoard[ay][ax].team != turn % 2) {
-		printf("Not Your Turn\n");
-		return 0;
-	}
+//	if (_pBoard[ay][ax].team != turn % 2) {
+//		printf("Not Your Turn\n");
+//		return 0;
+//	}
 	int type = _pBoard[ay][ax].type;
 	switch (type) {
 	case -1:

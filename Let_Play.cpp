@@ -6,14 +6,10 @@ ChessPlay::ChessPlay() {
 //	printf("2\n");
 	int turn = 1;
 	while (1) {
-		Board.ChessDisplay(pBoard);
-		printf("\nturn: %d", turn);
-		if (turn % 2 == 1)
-			printf(" White\n");
-		else
-			printf(" Black\n");
+		Board.ChessDisplay(pBoard,turn);
+	
 
-		int tmp = Board.GetCommand2(pBoard, turn);
+		int tmp = Board.GetCommand2(pBoard, &turn);
 		if (tmp >= 1)
 			turn++;
 	}

@@ -1,6 +1,8 @@
 #include"Board.h"
 #include<algorithm>
 #include<math.h>
+#include<conio.h>
+#include<Windows.h>
 using namespace std;
 
 int Pa(int team, int ax, int ay, int bx, int by,Piece _pBoard[][10]);
@@ -9,13 +11,15 @@ int Kn(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Bi(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Qu(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
 int Ki(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]);
-//extern Piece _pBoard[10][10];
+void gotoXY(int x, int y);
+
 int ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
-	printf("%d %d %d %d\n", ax, ay, bx, by);
+	
 //	Piece _pBoard[10][10] = ChessBoard::_pBoard;
 	int team = _pBoard[ay][ax].team;
 	int type =_pBoard[ay][ax].type;
 	int tmp_B[10][10] = { 0, };	//0 불가능 1 가능 2 어택
+	gotoXY(0, 13);
 	if (ax < 1 || ax>8 || bx < 1 || bx>8 || ay < 1 || ay>8 || by < 1 || by>8) {
 		printf("input error\n");
 		return 0;
@@ -51,6 +55,7 @@ int ChessBoard::MoveTo(int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 		return 0;
 		printf("   ");
 	}
+	
 	return 0;
 }
 /// <summary>
@@ -102,8 +107,7 @@ int Pa(int team, int ax, int ay, int bx, int by, Piece _pBoard[][10]) {
 	else if(team == 0){		// Black
 		if (_pBoard[by][bx].type > 0) {
 			if (ay - 1 == by && abs(ax - bx) == 1) {
-				_pBoard[by][bx].type = _pBoard[ay][ax].type;
-				_pBoard[by][bx].team = _pBoard[ay][ax].team;
+				_move(ax, ay, bx, by, _pBoard);
 				printf("attack\n");
 				return 2;
 			}
