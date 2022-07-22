@@ -7,6 +7,5 @@ private :
 //	const ChessBoard* pBoard;
 public:
 	ChessPlay();
-	void _Command();
 	~ChessPlay();
 };

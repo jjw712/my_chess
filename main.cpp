@@ -9,9 +9,8 @@ using namespace std;
 /// MoveTo() -> 각각의 말들의 이동
 /// display() -> 현재 게임판의 상태 표시
 /// 
-/// 매턴 Board->move->display
-/// </summary>
-/// <returns></returns>
+/// Board생성 후 매턴(command->move->display) 반복
+
 int main() {
 	ChessPlay Play = ChessPlay();
 	

@@ -15,9 +15,6 @@ ChessPlay::ChessPlay() {
 	}
 //	printf("3\n");
 }
-void ChessPlay::_Command() {
-	
-}
 ChessPlay::~ChessPlay() {
 
 }
